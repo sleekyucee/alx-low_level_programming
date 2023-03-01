@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 /**
-* main - this describes the main funnction
+* main - this describes the main function
 *
 * Return: 0
 */
@@ -24,6 +24,6 @@ p = &n;
 */
 *(p + 5) = 98;
 /* ...so that this prints 98\n */
-printf("a[2] = %d\n", a[2]);
+printf("p[2] = %d\n", p[2]);
 return (0);
 }
