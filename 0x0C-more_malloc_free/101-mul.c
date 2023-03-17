@@ -1,7 +1,6 @@
 #include "main.h"
-#include <stdlib.h>
 #include <stdio.h>
-#define ERR_MSG "Error"
+#include <stdlib.h>
 
 /**
 * is_digit - checks if a string contains a non-digit char
@@ -14,13 +13,13 @@ int is_digit(char *s)
 
 	while (s[i])
 	{
-
 		if (s[i] < '0' || s[i] > '9')
 			return (0);
 		i++;
 	}
 	return (1);
 }
+
 /**
 * _strlen - returns the length of a string
 * @s: string to evaluate
@@ -34,17 +33,19 @@ int _strlen(char *s)
 	{
 		i++;
 	}
+
 	return (i);
 }
+
 /**
 * errors - handles errors for main
 */
-
 void errors(void)
 {
 	printf("Error\n");
 	exit(98);
 }
+
 /**
 * main - multiplies two positive numbers
 * @argc: number of arguments
@@ -90,7 +91,7 @@ int main(int argc, char *argv[])
 	}
 	if (!a)
 		_putchar('0');
-	_putchar('\n')
+	_putchar('\n');
 	free(result);
 	return (0);
 }
