@@ -3,14 +3,15 @@
 
 
 	/**
-	 * struct dog - a dog's basic info
+	 * struct - about struct
+	 * dog - a dog's basic info
 	 * @name: First member
 	 * @age: Second member
 	 * @owner: Third member
 	 *
-	 * Description: Longer description
+	 * Description: struct dog
 	 */
-	struct dog
+	struct dog(void)
 	{
 		char *name;
 		float age;
