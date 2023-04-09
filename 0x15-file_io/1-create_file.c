@@ -1,6 +1,4 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 /**
  * create_file - creates a new file with specified content
@@ -15,9 +13,7 @@ int create_file(const char *filename, char *text_content)
 	int fd, bytes_written, len = 0;
 
 	if (filename == NULL)
-	{
 		return (-1);
-	}
 
 	if (text_content != NULL)
 	{
@@ -29,9 +25,8 @@ int create_file(const char *filename, char *text_content)
 	bytes_written = write(fd, text_content, len);
 
 	if (fd == -1 || bytes_written == -1)
-	{
 		return (-1);
-	}
+
 	close(fd);
 	return (1);
 }
