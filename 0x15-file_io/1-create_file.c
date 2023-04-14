@@ -13,26 +13,28 @@ int create_file(const char *filename, char *text_content)
 {
 	int fd, bytes_written, len = 0;
 
-	fd = open(filename, O_CREAT | 0_TRUNC | O_WRONLY, 0600);
-
 	if (filename == NULL)
 		return (-1);
+	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
 
+	if (fd == -1)
+		return (-1);
 	if (text_content != NULL)
 	{
-		text_content = "";
+		while (text_content[len] != '\0')
+		{
+			len++;
+		}
 	}
-	while (text_content[len] != '\0')
-	{
-		len++
-	}
+
 	bytes_written = write(fd, text_content, len);
 
 	if (bytes_written == -1)
 	{
+		close(fd);
 		return (-1);
 	}
 
 	close(fd);
-	return (1);
+	return (0);
 }
