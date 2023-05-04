@@ -23,13 +23,21 @@ unsigned int binary_to_uint(const char *b)
 		{
 			return (0);
 		}
+		i++
+	}
 
+	i = 0;
+
+	while (b[i] != '\0')
+	{
 		result <<= 1;
 
 		if (b[i] & 1)
 		{
 			result += 1;
 		}
+
+		i++
 	}
 
 	return (result);
