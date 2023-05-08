@@ -28,7 +28,7 @@ void check_elf(unsigned char *e_ident)
 
 	for (i = 0; i < 4; i++)
 	{
-		if (e_ident[i] != 127 &&
+		if (e_ident[i] != 0x7F &&
 		    e_ident[i] != 'E' &&
 		    e_ident[i] != 'L' &&
 		    e_ident[i] != 'F')
@@ -116,6 +116,8 @@ void print_data(unsigned char *e_ident)
 /**
  * print_version - Prints the ELF header version
  * @e_ident: A pointer to an array that contains the ELF version
+ * Description: The version is determined by the value in the ELF header
+ * and printed accordingly
  */
 void print_version(unsigned char *e_ident)
 {
@@ -158,9 +160,6 @@ void print_osabi(unsigned char *e_ident)
 	case ELFOSABI_SOLARIS:
 		printf("UNIX - Solaris\n");
 		break;
-	case ELFOSABI_AIX:
-		printf("UNIX - AIX\N");
-		break;
 	case ELFOSABI_IRIX:
 		printf("UNIX - IRIX\n");
 		break;
@@ -186,7 +185,7 @@ void print_osabi(unsigned char *e_ident)
  * @e_ident: A pointer to an array that contains
  * the ELF ABI version
  */
-void print_abiversion(unsigned char abiversion)
+void print_abiversion(unsigned char *e_ident)
 {
 	printf("  ABI Version:                       %d\n",
 	       e_ident[EI_ABIVERSION]);
@@ -256,7 +255,7 @@ void print_entry(unsigned long int e_entry, unsigned char *e_ident)
 /**
  * close_elf - Closes the ELF file descriptor
  * @elf: An integer that specifies the file descriptor to be closed
- *
+ * Desc: Return exit code 98, if file cannot be closed
  */
 void close_elf(int elf)
 {
@@ -277,13 +276,14 @@ void close_elf(int elf)
  * Return: 0 on success, otherwise 1
  */
 
+
 int main(int __attribute__((__unused__)) argc, char *argv[])
 {
 	Elf64_Ehdr *header;
 	int bytes_open, bytes_read;
 
 	bytes_open = open(argv[1], O_RDONLY);
-	if (bytes_read == -1)
+	if (bytes_open == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read file %s\n", argv[1]);
 		exit(98);
@@ -295,7 +295,7 @@ int main(int __attribute__((__unused__)) argc, char *argv[])
 		dprintf(STDERR_FILENO, "Error: Can't read file %s\n", argv[1]);
 		exit(98);
 	}
-	bytes_read = read(o, header, sizeof(Elf64_Ehdr));
+	bytes_read = read(bytes_open, header, sizeof(Elf64_Ehdr));
 	if (bytes_read == -1)
 	{
 		free(header);
@@ -311,7 +311,7 @@ check_elf(header->e_ident);
 	print_data(header->e_ident);
 	print_version(header->e_ident);
 	print_osabi(header->e_ident);
-	print_abi(header->e_ident);
+	print_abiversion(header->e_ident);
 	print_type(header->e_type, header->e_ident);
 	print_entry(header->e_entry, header->e_ident);
 
@@ -319,4 +319,3 @@ check_elf(header->e_ident);
 	close_elf(bytes_open);
 	return (0);
 }
-
